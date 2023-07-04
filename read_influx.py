@@ -13,7 +13,7 @@ def connet_bbdd(key):
 
     client = influxdb.InfluxDBClient(host=server_ip, port=server_port, database=key)
     result = client.query("SHOW MEASUREMENTS;")
-    print("SHOW MEASUREMENTS")
+    print("----SHOW MEASUREMENTS----")
     lista = list(result.get_points())
     for item in lista:
         nombre = item['name']
