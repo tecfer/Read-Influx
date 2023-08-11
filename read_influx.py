@@ -3,6 +3,70 @@ import requests
 #pip install influxdb
 import influxdb
 
+'''
+Ejemplo de try import
+try:
+    import requests
+except ImportError:
+    print("El módulo 'requests' no está instalado.")
+    install_requests = input("¿Deseas instalarlo ahora? (s/n): ")
+    if install_requests.lower() == 's':
+        try:
+            import subprocess
+            subprocess.check_call(['pip', 'install', 'requests'])
+            print("El módulo 'requests' se ha instalado correctamente.")
+        except Exception as e:
+            print("Ha ocurrido un error al intentar instalar 'requests':", e)
+    else:
+        print("No se ha instalado el módulo 'requests'.")
+else:
+    print("El módulo 'requests' está instalado.")
+
+'''
+
+'''
+
+Ejemplo de try requirements
+import subprocess
+import sys
+
+def install_requirements(requirements_file):
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_file])
+    except subprocess.CalledProcessError as e:
+        print("Error al instalar las dependencias:", e)
+        sys.exit(1)
+
+def main():
+    requirements_file = "requirements.txt"
+    try:
+        with open(requirements_file, "r") as f:
+            required_packages = [line.strip() for line in f.readlines()]
+        
+        installed_packages = [pkg.key for pkg in pkg_resources.working_set]
+        missing_packages = [pkg for pkg in required_packages if pkg not in installed_packages]
+
+        if missing_packages:
+            print("Faltan dependencias:")
+            for pkg in missing_packages:
+                print(f"- {pkg}")
+            install = input("¿Deseas instalar las dependencias faltantes? (s/n): ")
+            if install.lower() == 's':
+                install_requirements(requirements_file)
+        else:
+            print("Todas las dependencias están instaladas.")
+        
+        # Aquí puedes ejecutar tu archivo Python
+        # por ejemplo:
+        # import tu_archivo
+    except FileNotFoundError:
+        print(f"No se encontró el archivo {requirements_file}.")
+
+if __name__ == "__main__":
+    main()
+
+'''
+
 #pip install python-dotenv
 from dotenv import load_dotenv
 
