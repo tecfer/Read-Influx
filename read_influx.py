@@ -17,11 +17,7 @@ def requirements_check():
         
         installed_packages = [pkg.key for pkg in pkg_resources.working_set]     
         missing_packages = [pkg for pkg in required_packages if pkg not in installed_packages]
-        print("dev: Installed pakages")
-        print(installed_packages)
-        print("dev: Missed pakages")
-        print(missing_packages)
-        print("dev...")
+        
         if missing_packages:
             print("Faltan dependencias:")
             for pkg in missing_packages:
@@ -56,13 +52,12 @@ def connet_bbdd(server_ip,server_port,key):
 
 
 def program():
-    # pip install python-dotenv
-    from dotenv import load_dotenv
+    
+    from dotenv import load_dotenv # pip install python-dotenv
     import requests
     import influxdb
     import os
 
-# Cargar variables de entorno desde el archivo .env
     load_dotenv()
 
     server_ip = os.getenv('SERVER_IP')
@@ -71,16 +66,14 @@ def program():
     client = influxdb.InfluxDBClient(server_ip,server_port,)
     databases = client.query("show databases;")
 
-    print("Bases de datos:")
-    #for row in resultado:
-
+    print("Bases de datos:")    
     print('---------')
+
     databases_set = list(databases.get_points())
 
-    # Recorrer la lista e imprimir los nombres de las bases de datos
-    for base_de_datos in databases_set:
-        nombre = base_de_datos['name']
-        print(f"{databases_set.index(base_de_datos)} - {nombre}")
+    for bbdd in databases_set:
+        nombre = bbdd['name']
+        print(f"{databases_set.index(bbdd)} - {nombre}")
 
 
     key = ''
